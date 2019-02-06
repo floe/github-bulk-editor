@@ -12,17 +12,19 @@ To use it, you need to add your own account and password or API key in line 10 (
   
 Currently, the only supported actions are a) fetching a list of repos you have access to, and b) transferring those repos to another user/org, because that is the functionality I needed right now.
 
-However, I've tried to keep the internals as generic as possible (see https://github.com/floe/github-bulk-editor/blob/master/github-bulk-editor.py#L14-L23):
+However, I've tried to keep the internals as generic as possible (see https://github.com/floe/github-bulk-editor/blob/master/github-bulk-editor.py#L14-L25):
 
 ```python
 # command title: [ GET url, JSON field to extract from result ]
 fetch_cmds = { 
-    "Get all repositories": [ "https://api.github.com/user/repos", "full_name"] 
+    "Get all repositories": [ "https://api.github.com/user/repos", "full_name"],
+    "Get all teams": [ "https://api.github.com/orgs/mmbuw/teams", "slug" ], # TODO: make org name editable
 }
 
-# command title: [ request function, url, parameters ] (will be passed through format(), hence the double braces)
+# command title: [ request function, url, parameters ] (will be passed through format(name,id), hence the double braces)
 action_cmds = {
-    "Transfer repository": [ "github_post", "https://api.github.com/repos/{0}/transfer", '{{ "new_owner": "{0}", "team_ids": [] }}' ]
+    "Transfer repository": [ "github_post", "https://api.github.com/repos/{0}/transfer", '{{ "new_owner": "{0}", "team_ids": [] }}' ],
+    "Delete team": [ "github_delete", "https://api.github.com/teams/{1}", "" ],
 }
 
 # ...
