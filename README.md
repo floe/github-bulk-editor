@@ -35,3 +35,5 @@ def github_post(url,payload):
 ```
 
 In theory, you should be able to just add new entries to `fetch_cmds` and `action_cmds` to support new API calls, and perhaps add something like another `github_put` (or whatever) function.
+
+P.S. If you're wondering why I used requests + json (as also suggested at https://stackoverflow.com/a/10626326/838719) instead of PyGithub or similar, none of the existing Python libraries actually support the "Transfer Repo" command. Duh.
