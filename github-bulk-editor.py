@@ -14,12 +14,14 @@ headers = {"Accept": "application/vnd.github.nightshade-preview+json"}
 # TODO if you want to extend this tool, start here
 # command title: [ GET url, JSON field to extract from result ]
 fetch_cmds = { 
-    "Get all repositories": [ "https://api.github.com/user/repos", "full_name"] 
+    "Get all repositories": [ "https://api.github.com/user/repos", "full_name"],
+    "Get all teams": [ "https://api.github.com/orgs/mmbuw/teams", "slug" ], # TODO: make org name editable
 }
 
-# command title: [ request function, url, parameters ] (will be passed through format(), hence the double braces)
+# command title: [ request function, url, parameters ] (will be passed through format(name,id), hence the double braces)
 action_cmds = {
-    "Transfer repository": [ "github_post", "https://api.github.com/repos/{0}/transfer", '{{ "new_owner": "{0}", "team_ids": [] }}' ]
+    "Transfer repository": [ "github_post", "https://api.github.com/repos/{0}/transfer", '{{ "new_owner": "{0}", "team_ids": [] }}' ],
+    "Delete team": [ "github_delete", "https://api.github.com/teams/{1}", "" ],
 }
 
 
@@ -50,6 +52,12 @@ def github_post(url,payload):
     r = requests.post(url,auth=cred,headers=headers,data=payload,allow_redirects=True)
     return r
 
+# delete a resource
+def github_delete(url,payload):
+
+    r = requests.delete(url,auth=cred,headers=headers,allow_redirects=True)
+    return r
+
 
 class GithubRepoList(Gtk.Window):
 
@@ -78,7 +86,7 @@ class GithubRepoList(Gtk.Window):
             self.action.append_text(cmd)
 
         #Creating the ListStore model
-        self.liststore = Gtk.ListStore(bool, str, str)
+        self.liststore = Gtk.ListStore(bool, str, str, int)
 
         #creating the treeview, making it use the filter as a model, and adding the columns
         self.treeview = Gtk.TreeView.new_with_model(self.liststore)
@@ -93,8 +101,8 @@ class GithubRepoList(Gtk.Window):
         self.treeview.append_column(column)
 
         renderer = Gtk.CellRendererText()
-        column = Gtk.TreeViewColumn("Repository", renderer, text=2)
-        column.set_sort_column_id(1)
+        column = Gtk.TreeViewColumn("Item Name", renderer, text=2)
+        column.set_sort_column_id(2)
         self.treeview.append_column(column)
 
         # command bar
@@ -125,7 +133,7 @@ class GithubRepoList(Gtk.Window):
         self.liststore.clear()
         for item in github_get_all(url):
             # FIXME: progress indicator doesn't work, main thread is blocked here
-            self.liststore.append([False,"",item[field]])
+            self.liststore.append([False,"",item[field],item["id"]])
 
     def on_command_activate(self, widget):
         cmd = self.action.get_active_text()
@@ -138,8 +146,9 @@ class GithubRepoList(Gtk.Window):
         for item in self.liststore:
             if item[0]:
                 target = item[2]
+                target_id = item[3]
                 tmp_params = params.format(param)
-                tmp_url = url.format(target)
+                tmp_url = url.format(target,target_id)
                 print(verb,tmp_url,tmp_params)
                 res = verb(tmp_url,tmp_params)
                 item[1] = str(res.status_code)
@@ -148,3 +157,4 @@ win = GithubRepoList()
 win.connect("destroy", Gtk.main_quit)
 win.show_all()
 Gtk.main()
+
