@@ -1,5 +1,7 @@
 # github-bulk-editor
 
+![Screenshot](https://github.com/floe/github-bulk-editor/raw/master/github-bulk-editor.png "Screenshot")
+
 I needed to transfer a large bunch of repositories from one organization to another one. I had already found https://github.com/ahmadnassri/github-bulk-transfer, but that looked quite brittle, and I am honestly not a big fan of node.js projects anyway (*cough* left-pad *cough*).
 
 So I put this tool together over the course of a couple of evenings, which allows you to:
