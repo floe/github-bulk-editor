@@ -4,9 +4,14 @@ I needed to transfer a large bunch of repositories from one organization to anot
 
 So I put this tool together over the course of a couple of evenings, which allows you to:
 
-  - fetch a list of items from the Github API (**)
-  - select a subset of items from the result list
-  - and execute an API command for each of the selected items, with optional parameters (**) 
+  - fetch a list of items from the Github API - currently supported:
+    - all repos the current user has permission for
+    - all teams in an organization
+    - all members of an organization
+  - and execute an API command for a selected subset of the items - currently supported:
+    - transfer repos to another organization
+    - remove teams
+    - remove members
   
 To use it, you need to add your own account and password or API key in line 10 (https://github.com/floe/github-bulk-editor/blob/master/github-bulk-editor.py#L10).
   
