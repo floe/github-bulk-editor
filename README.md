@@ -1,7 +1,5 @@
 # github-bulk-editor
 
-![Screenshot](https://github.com/floe/github-bulk-editor/raw/master/github-bulk-editor.png "Screenshot")
-
 I needed to transfer a large bunch of repositories from one organization to another one. I had already found https://github.com/ahmadnassri/github-bulk-transfer, but that looked quite brittle, and I am honestly not a big fan of node.js projects anyway (*cough* left-pad *cough*).
 
 So I put this tool together over the course of a couple of evenings, which allows you to:
@@ -14,7 +12,9 @@ So I put this tool together over the course of a couple of evenings, which allow
     - transfer repos to another organization
     - remove teams
     - remove members
-  
+
+![Screenshot](https://github.com/floe/github-bulk-editor/raw/master/github-bulk-editor.png "Screenshot")
+
 To use it, you need to add your own account and password or API key in line 10 (https://github.com/floe/github-bulk-editor/blob/master/github-bulk-editor.py#L10).
   
 Currently, the only well-tested actions are a) fetching a list of repos you have access to, and b) transferring those repos to another user/org, because that is the functionality I needed right now.
