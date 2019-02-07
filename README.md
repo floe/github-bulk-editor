@@ -24,19 +24,20 @@ However, I've tried to keep the internals as generic as possible (see https://gi
 fetch_cmds = { 
     "Get all repositories": [ "https://api.github.com/user/repos", "full_name"],
     "Get all teams": [ "https://api.github.com/orgs/mmbuw/teams", "slug" ], # TODO: make org name editable
+    "Get all members": [ "https://api.github.com/orgs/mmbuw/members", "login" ], # TODO: make org name editable
 }
 
 # command title: [ request function, url, parameters ] (will be passed through format(name,id), hence the double braces)
 action_cmds = {
     "Transfer repository": [ "github_post", "https://api.github.com/repos/{0}/transfer", '{{ "new_owner": "{0}", "team_ids": [] }}' ],
     "Delete team": [ "github_delete", "https://api.github.com/teams/{1}", "" ],
+    "Remove member": [ "github_delete", "https://api.github.com/orgs/mmbuw/members/{0}", "" ], # TODO: fixed org name
 }
 
 # ...
 
 # post a payload to url
 def github_post(url,payload):
-
     r = requests.post(url,auth=cred,headers=headers,data=payload,allow_redirects=True)
     return r
 ```
