@@ -15,7 +15,7 @@ So I put this tool together over the course of a couple of evenings, which allow
   
 To use it, you need to add your own account and password or API key in line 10 (https://github.com/floe/github-bulk-editor/blob/master/github-bulk-editor.py#L10).
   
-Currently, the only supported actions are a) fetching a list of repos you have access to, and b) transferring those repos to another user/org, because that is the functionality I needed right now.
+Currently, the only well-tested actions are a) fetching a list of repos you have access to, and b) transferring those repos to another user/org, because that is the functionality I needed right now.
 
 However, I've tried to keep the internals as generic as possible (see https://github.com/floe/github-bulk-editor/blob/master/github-bulk-editor.py#L14-L25):
 
@@ -43,4 +43,4 @@ def github_post(url,payload):
 
 In theory, you should be able to just add new entries to `fetch_cmds` and `action_cmds` to support new API calls, and perhaps add something like another `github_put` (or whatever) function.
 
-P.S. If you're wondering why I used requests + json (as also suggested at https://stackoverflow.com/a/10626326/838719) instead of PyGithub or similar, none of the existing Python libraries actually support the "Transfer Repo" command. Duh.
+P.S. If you're wondering why I used `requests` + `json` (as also suggested at https://stackoverflow.com/a/10626326/838719) instead of `PyGithub` or similar, none of the existing Python libraries actually support the "Transfer Repo" command. Duh.
