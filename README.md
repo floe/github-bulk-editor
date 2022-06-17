@@ -15,7 +15,7 @@ So I put this tool together over the course of a couple of evenings, which allow
 
 ![Screenshot](https://github.com/floe/github-bulk-editor/raw/master/github-bulk-editor.png "Screenshot")
 
-To use it, you need to add your own account and password or API key in line 10 (https://github.com/floe/github-bulk-editor/blob/master/github-bulk-editor.py#L10).
+To use it, you need to add your own account and access token from https://github.com/settings/tokens in line 10 (https://github.com/floe/github-bulk-editor/blob/master/github-bulk-editor.py#L10).
   
 Currently, the only well-tested actions are a) fetching a list of repos you have access to, and b) transferring those repos to another user/org, because that is the functionality I needed right now.
 

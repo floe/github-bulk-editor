@@ -7,7 +7,7 @@ import requests, json
 
 
 # credentials/headers
-cred = ("floe", "api_key_or_password_here") # TODO: fill this in
+cred = ("floe", "access_token_here") # TODO: fill this in
 headers = {"Accept": "application/vnd.github.nightshade-preview+json"}
 
 
@@ -27,8 +27,8 @@ action_cmds = {
 }
 
 # sanity check for the people who dislike READMEs
-if "password" in cred[1]:
-    print("Please set your own Github credentials in line 10.")
+if not "ghp_" in cred[1]:
+    print("Please set your own Github user name and access token (from https://github.com/settings/tokens) in line 10.")
     exit(1)
 
 # fetch all items from url (with pagination)
