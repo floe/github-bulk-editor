@@ -26,6 +26,10 @@ action_cmds = {
     "Remove member": [ "github_delete", "https://api.github.com/orgs/mmbuw/members/{0}", "" ], # TODO: fixed org name
 }
 
+# sanity check for the people who dislike READMEs
+if "password" in cred[1]:
+    print("Please set your own Github credentials in line 10.")
+    exit(1)
 
 # fetch all items from url (with pagination)
 def github_get_all(url):
